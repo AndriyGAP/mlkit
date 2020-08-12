@@ -58,21 +58,10 @@ import androidx.camera.view.PreviewView;
 
 import com.google.android.gms.common.annotation.KeepName;
 import com.google.mlkit.common.MlKitException;
-import com.google.mlkit.common.model.LocalModel;
-import com.google.mlkit.vision.demo.automl.AutoMLImageLabelerProcessor;
 import com.google.mlkit.vision.demo.barcodescanner.BarcodeScannerProcessor;
-import com.google.mlkit.vision.demo.facedetector.FaceDetectorProcessor;
-import com.google.mlkit.vision.demo.labeldetector.LabelDetectorProcessor;
-import com.google.mlkit.vision.demo.objectdetector.ObjectDetectorProcessor;
 import com.google.mlkit.vision.demo.preference.PreferenceUtils;
 import com.google.mlkit.vision.demo.preference.SettingsActivity;
 import com.google.mlkit.vision.demo.preference.SettingsActivity.LaunchSource;
-import com.google.mlkit.vision.demo.textdetector.TextRecognitionProcessor;
-import com.google.mlkit.vision.face.FaceDetectorOptions;
-import com.google.mlkit.vision.label.custom.CustomImageLabelerOptions;
-import com.google.mlkit.vision.label.defaults.ImageLabelerOptions;
-import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
-import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions;
 
 import java.util.ArrayList;
 import java.util.List;
