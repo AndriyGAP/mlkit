@@ -45,23 +45,9 @@ import java.util.List;
  * available testing Activities.
  */
 public final class ChooserActivity extends AppCompatActivity
-        implements OnRequestPermissionsResultCallback, AdapterView.OnItemClickListener {
+        implements OnRequestPermissionsResultCallback {
     private static final String TAG = "ChooserActivity";
     private static final int PERMISSION_REQUESTS = 1;
-
-    private static final Class<?>[] CLASSES =
-            new Class<?>[]{
-                    LivePreviewActivity.class,
-                    StillImageActivity.class,
-                    CameraXLivePreviewActivity.class,
-            };
-
-    private static final int[] DESCRIPTION_IDS =
-            new int[]{
-                    R.string.desc_camera_source_activity,
-                    R.string.desc_still_image_activity,
-                    R.string.desc_camerax_live_preview_activity,
-            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,19 +62,13 @@ public final class ChooserActivity extends AppCompatActivity
                             .build());
         }
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
+        Log.d(TAG, "ChooserActivity onCreate");
 
         startActivity(new Intent(this, CameraXLivePreviewActivity.class));
 
         if (!allPermissionsGranted()) {
             getRuntimePermissions();
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Class<?> clicked = CLASSES[position];
-        startActivity(new Intent(this, clicked));
     }
 
     private String[] getRequiredPermissions() {
@@ -138,39 +118,5 @@ public final class ChooserActivity extends AppCompatActivity
         }
         Log.i(TAG, "Permission NOT granted: " + permission);
         return false;
-    }
-
-    private static class MyArrayAdapter extends ArrayAdapter<Class<?>> {
-
-        private final Context context;
-        private final Class<?>[] classes;
-        private int[] descriptionIds;
-
-        MyArrayAdapter(Context context, int resource, Class<?>[] objects) {
-            super(context, resource, objects);
-
-            this.context = context;
-            classes = objects;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-
-            if (convertView == null) {
-                LayoutInflater inflater =
-                        (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(android.R.layout.simple_list_item_2, null);
-            }
-
-            ((TextView) view.findViewById(android.R.id.text1)).setText(classes[position].getSimpleName());
-            ((TextView) view.findViewById(android.R.id.text2)).setText(descriptionIds[position]);
-
-            return view;
-        }
-
-        void setDescriptionIds(int[] descriptionIds) {
-            this.descriptionIds = descriptionIds;
-        }
     }
 }
