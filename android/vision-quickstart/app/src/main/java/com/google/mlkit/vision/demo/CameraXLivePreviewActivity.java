@@ -321,57 +321,8 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         }
 
         try {
-            switch (selectedModel) {
-                case OBJECT_DETECTION:
-                    Log.i(TAG, "Using Object Detector Processor");
-                    ObjectDetectorOptions objectDetectorOptions =
-                            PreferenceUtils.getObjectDetectorOptionsForLivePreview(this);
-                    imageProcessor = new ObjectDetectorProcessor(this, objectDetectorOptions);
-                    break;
-                case OBJECT_DETECTION_CUSTOM:
-                    Log.i(TAG, "Using Custom Object Detector (Bird) Processor");
-                    LocalModel localModel =
-                            new LocalModel.Builder()
-                                    .setAssetFilePath("custom_models/bird_classifier.tflite")
-                                    .build();
-                    CustomObjectDetectorOptions customObjectDetectorOptions =
-                            PreferenceUtils.getCustomObjectDetectorOptionsForLivePreview(this, localModel);
-                    imageProcessor = new ObjectDetectorProcessor(this, customObjectDetectorOptions);
-                    break;
-                case TEXT_RECOGNITION:
-                    Log.i(TAG, "Using on-device Text recognition Processor");
-                    imageProcessor = new TextRecognitionProcessor(this);
-                    break;
-                case FACE_DETECTION:
-                    Log.i(TAG, "Using Face Detector Processor");
-                    FaceDetectorOptions faceDetectorOptions =
-                            PreferenceUtils.getFaceDetectorOptionsForLivePreview(this);
-                    imageProcessor = new FaceDetectorProcessor(this, faceDetectorOptions);
-                    break;
-                case BARCODE_SCANNING:
-                    Log.i(TAG, "Using Barcode Detector Processor");
-                    imageProcessor = new BarcodeScannerProcessor(this);
-                    break;
-                case IMAGE_LABELING:
-                    Log.i(TAG, "Using Image Label Detector Processor");
-                    imageProcessor = new LabelDetectorProcessor(this, ImageLabelerOptions.DEFAULT_OPTIONS);
-                    break;
-                case IMAGE_LABELING_CUSTOM:
-                    Log.i(TAG, "Using Custom Image Label (Bird) Detector Processor");
-                    LocalModel localClassifier =
-                            new LocalModel.Builder()
-                                    .setAssetFilePath("custom_models/bird_classifier.tflite")
-                                    .build();
-                    CustomImageLabelerOptions customImageLabelerOptions =
-                            new CustomImageLabelerOptions.Builder(localClassifier).build();
-                    imageProcessor = new LabelDetectorProcessor(this, customImageLabelerOptions);
-                    break;
-                case AUTOML_LABELING:
-                    imageProcessor = new AutoMLImageLabelerProcessor(this);
-                    break;
-                default:
-                    throw new IllegalStateException("Invalid model name");
-            }
+            Log.i(TAG, "Using Barcode Detector Processor");
+            imageProcessor = new BarcodeScannerProcessor(this);
         } catch (Exception e) {
             Log.e(TAG, "Can not create image processor: " + selectedModel, e);
             Toast.makeText(
