@@ -114,7 +114,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     private VisionImageProcessor imageProcessor;
     private boolean needUpdateGraphicOverlayImageSourceInfo;
 
-    private String selectedModel = OBJECT_DETECTION;
+    private String selectedModel = BARCODE_SCANNING;
     private int lensFacing = CameraSelector.LENS_FACING_BACK;
     private CameraSelector cameraSelector;
 
@@ -134,7 +134,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         }
 
         if (savedInstanceState != null) {
-            selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, OBJECT_DETECTION);
+            selectedModel = savedInstanceState.getString(STATE_SELECTED_MODEL, BARCODE_SCANNING);
             lensFacing = savedInstanceState.getInt(STATE_LENS_FACING, CameraSelector.LENS_FACING_BACK);
         }
         cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
@@ -151,11 +151,11 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
 
         Spinner spinner = findViewById(R.id.spinner);
         List<String> options = new ArrayList<>();
+        options.add(BARCODE_SCANNING);
         options.add(OBJECT_DETECTION);
         options.add(OBJECT_DETECTION_CUSTOM);
         options.add(FACE_DETECTION);
         options.add(TEXT_RECOGNITION);
-        options.add(BARCODE_SCANNING);
         options.add(IMAGE_LABELING);
         options.add(IMAGE_LABELING_CUSTOM);
         options.add(AUTOML_LABELING);
