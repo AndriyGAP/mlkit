@@ -89,14 +89,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     private static final String TAG = "CameraXLivePreview";
     private static final int PERMISSION_REQUESTS = 1;
 
-    private static final String OBJECT_DETECTION = "Object Detection";
-    private static final String OBJECT_DETECTION_CUSTOM = "Custom Object Detection (Bird)";
-    private static final String FACE_DETECTION = "Face Detection";
-    private static final String TEXT_RECOGNITION = "Text Recognition";
     private static final String BARCODE_SCANNING = "Barcode Scanning";
-    private static final String IMAGE_LABELING = "Image Labeling";
-    private static final String IMAGE_LABELING_CUSTOM = "Custom Image Labeling (Bird)";
-    private static final String AUTOML_LABELING = "AutoML Image Labeling";
 
     private static final String STATE_SELECTED_MODEL = "selected_model";
     private static final String STATE_LENS_FACING = "lens_facing";
@@ -121,7 +114,7 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
+        Log.d(TAG, "CameraXLivePreviewActivity onCreate");
 
         if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP) {
             Toast.makeText(
@@ -152,13 +145,6 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
         Spinner spinner = findViewById(R.id.spinner);
         List<String> options = new ArrayList<>();
         options.add(BARCODE_SCANNING);
-        options.add(OBJECT_DETECTION);
-        options.add(OBJECT_DETECTION_CUSTOM);
-        options.add(FACE_DETECTION);
-        options.add(TEXT_RECOGNITION);
-        options.add(IMAGE_LABELING);
-        options.add(IMAGE_LABELING_CUSTOM);
-        options.add(AUTOML_LABELING);
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, R.layout.spinner_style, options);
         // Drop down layout style - list view with radio button
