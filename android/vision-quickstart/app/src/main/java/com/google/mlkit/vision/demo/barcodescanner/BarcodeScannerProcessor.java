@@ -82,9 +82,10 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
         for (int i = 0; i < barcodes.size(); ++i) {
             Barcode barcode = barcodes.get(i);
             graphicOverlay.add(new BarcodeGraphic(graphicOverlay, barcode));
+            store2Clipboard(barcode.getRawValue());
             if (!lastBar.equals(barcode.getRawValue())) {
                 lastBar = barcode.getRawValue();
-                store2Clipboard(store2File(lastBar)+"\n");
+                store2File(lastBar+"\n");
                 //logExtrasForTesting(barcode);
             }
         }
