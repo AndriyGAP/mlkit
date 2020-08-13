@@ -39,6 +39,14 @@
       android:background="#000"
       android:orientation="horizontal">
 
+    <ImageButton
+        android:id="@+id/save_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@android:string/yes"
+        android:visibility="gone"
+        app:srcCompat="@android:drawable/ic_menu_save" />
+
     <ToggleButton
         android:id="@+id/facing_switch"
         android:layout_width="48dp"

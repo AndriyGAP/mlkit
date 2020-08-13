@@ -157,6 +157,15 @@ public final class CameraXLivePreviewActivity extends AppCompatActivity
                             }
                         });
 
+        BarcodeScannerProcessor.clearFile(); //Clear file with barcodes on start
+        ImageView saveButton = findViewById(R.id.save_button);
+        saveButton.setOnClickListener(
+                v -> {
+                    String sRes = BarcodeScannerProcessor.readFile();
+                    if (sRes != null)
+                        Log.d("Reading result",sRes);
+                });
+
         ImageView settingsButton = findViewById(R.id.settings_button);
         settingsButton.setOnClickListener(
                 v -> {

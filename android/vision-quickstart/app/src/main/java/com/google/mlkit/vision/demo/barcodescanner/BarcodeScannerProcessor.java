@@ -16,8 +16,11 @@
 
 package com.google.mlkit.vision.demo.barcodescanner;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Point;
+import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -30,6 +33,11 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.demo.GraphicOverlay;
 import com.google.mlkit.vision.demo.VisionProcessorBase;
 
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.List;
 
 /**
@@ -38,11 +46,14 @@ import java.util.List;
 public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> {
 
     private static final String TAG = "BarcodeProcessor";
+    private static String lastBar = "";
+    private static Context cntxt;
 
     private final BarcodeScanner barcodeScanner;
 
     public BarcodeScannerProcessor(Context context) {
         super(context);
+        cntxt = context;
         // Note that if you know which format of barcode your app is dealing with, detection will be
         // faster to specify the supported barcode formats one by one, e.g.
         // new BarcodeScannerOptions.Builder()
@@ -71,8 +82,59 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
         for (int i = 0; i < barcodes.size(); ++i) {
             Barcode barcode = barcodes.get(i);
             graphicOverlay.add(new BarcodeGraphic(graphicOverlay, barcode));
-            logExtrasForTesting(barcode);
+            if (!lastBar.equals(barcode.getRawValue())) {
+                lastBar = barcode.getRawValue();
+                store2Clipboard(store2File(lastBar)+"\n");
+                //logExtrasForTesting(barcode);
+            }
         }
+    }
+
+    public static File makeFileName() {//Make full file name to external storage
+        return new File(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator), "barcode.txt");
+    }
+
+    public static String store2Clipboard(String sData) {
+        ClipboardManager clipboard = (ClipboardManager) cntxt.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText(sData, sData);
+        clipboard.setPrimaryClip(clip);
+        return sData;
+    }
+
+    public static String store2File(String sData) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(makeFileName(),true));
+            bw.write(sData);
+            bw.close();
+        }
+        catch (Exception e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+        return sData;
+    }
+
+    public static void clearFile() {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(makeFileName()));
+            bw.write("");
+            bw.close();
+        }
+        catch (Exception e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    public static String readFile() {
+        String sRes="";
+        try {
+            FileReader fr = new FileReader(makeFileName());
+            BufferedReader bfr = new BufferedReader(fr);
+            sRes = bfr.readLine();
+        }
+        catch (Exception e) {
+            Log.e("Exception", "File read error: " + e.toString());
+        }
+        return sRes;
     }
 
     private static void logExtrasForTesting(Barcode barcode) {
