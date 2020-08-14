@@ -37,6 +37,7 @@ import com.google.mlkit.vision.demo.CameraSource;
 import com.google.mlkit.vision.demo.GraphicOverlay;
 import com.google.mlkit.vision.demo.R;
 import com.google.mlkit.vision.demo.VisionProcessorBase;
+import com.google.mlkit.vision.demo.preference.PreferenceUtils;
 
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
@@ -87,21 +88,23 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
         for (int i = 0; i < barcodes.size(); ++i) {
             Barcode barcode = barcodes.get(i);
             graphicOverlay.add(new BarcodeGraphic(graphicOverlay, barcode));
-            store2Clipboard(barcode.getRawValue());
-            if (!lastBar.equals(barcode.getRawValue())) {
-                lastBar = barcode.getRawValue();
-                store2File(lastBar+"\n");
-                //logExtrasForTesting(barcode);
-            }
+            lastBar = barcode.getRawValue();
+            store2Clipboard(lastBar);
+            store2File(lastBar+"\n");
+            PreferenceManager.getDefaultSharedPreferences(cntxt)
+                    .edit()
+                    .putString(cntxt.getString(R.string.pref_key_execution_data_scanned), lastBar)
+                    .apply();
         }
     }
 
     public static File makeFileName() {//Make full file name to external storage
         String sPath = PreferenceManager
                 .getDefaultSharedPreferences(cntxt)
-                .getString(cntxt.getString(R.string.pref_key_file_path),
-                Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
-        return new File(new File(sPath), "barcode.txt");
+                .getString(cntxt.getString(R.string.pref_key_file_path),"");
+        if (sPath.equals(""))
+            sPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        return new File(new File(sPath), File.separator + "barcode.txt");
     }
 
     public static String store2Clipboard(String sData) {
