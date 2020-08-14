@@ -19,18 +19,23 @@ package com.google.mlkit.vision.demo.barcodescanner;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.common.images.Size;
 import com.google.android.gms.tasks.Task;
 import com.google.mlkit.vision.barcode.Barcode;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.demo.CameraSource;
 import com.google.mlkit.vision.demo.GraphicOverlay;
+import com.google.mlkit.vision.demo.R;
 import com.google.mlkit.vision.demo.VisionProcessorBase;
 
 import java.io.BufferedWriter;
@@ -92,7 +97,11 @@ public class BarcodeScannerProcessor extends VisionProcessorBase<List<Barcode>> 
     }
 
     public static File makeFileName() {//Make full file name to external storage
-        return new File(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator), "barcode.txt");
+        String sPath = PreferenceManager
+                .getDefaultSharedPreferences(cntxt)
+                .getString(cntxt.getString(R.string.pref_key_file_path),
+                Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator);
+        return new File(new File(sPath), "barcode.txt");
     }
 
     public static String store2Clipboard(String sData) {

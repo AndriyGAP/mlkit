@@ -20,6 +20,7 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.widget.Toast;
@@ -47,7 +48,9 @@ public class LivePreviewPreferenceFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.preference_live_preview);
         setUpCameraPreferences();
-        setUpFaceDetectionPreferences();
+        setUpDefaultPreference(R.string.pref_key_file_path);
+        setUpDefaultPreference(R.string.pref_key_execution_data_scanned);
+        //setUpFaceDetectionPreferences();
     }
 
     private void setUpCameraPreferences() {
@@ -162,6 +165,16 @@ public class LivePreviewPreferenceFragment extends PreferenceFragment {
                             getActivity(),
                             R.string.pref_key_camerax_target_analysis_size,
                             newStringValue);
+                    return true;
+                });
+    }
+
+    private void setUpDefaultPreference(@StringRes int preferenceKeyId) {
+        EditTextPreference pref = (EditTextPreference) findPreference(getString(preferenceKeyId));
+        pref.setSummary(pref.getText());
+        pref.setOnPreferenceChangeListener(
+                (preference, newValue) -> {
+                    pref.setSummary((String) newValue);
                     return true;
                 });
     }

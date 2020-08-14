@@ -41,6 +41,16 @@
     <string name="pref_summary_camera_live_viewport">Do not block camera preview drawing on detection</string>
 
     <!-- Strings for object detector enable multiple objects preference. -->
+    <string name="pref_title_file_path">Path to barcode.txt file</string>
+    <string name="pref_title_file_path_dir">Directiory</string>
+    <string name="pref_key_file_path" translatable="false">flpth</string>
+
+    <!-- Strings for current execution results -->
+    <string name="pref_title_execution_data">Execution results</string>
+    <string name="pref_title_execution_data_scanned">Scanned code</string>
+    <string name="pref_key_execution_data_scanned" translatable="false">scncd</string>
+
+    <!-- Strings for object detector enable multiple objects preference. -->
     <string name="pref_title_object_detector_enable_multiple_objects">Enable multiple objects</string>
     <string name="pref_key_live_preview_object_detector_enable_multiple_objects" translatable="false">lpodemo</string>
     <string name="pref_key_still_image_object_detector_enable_multiple_objects" translatable="false">siodemo</string>
