@@ -24,6 +24,18 @@ allprojects {
     }
 }
 
+subprojects {
+    afterEvaluate {
+        project ->
+            if (project.hasProperty("android")) {
+                android {
+                    compileSdkVersion = 29
+                    buildToolsVersion = "29.0.1"
+                }
+            }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
