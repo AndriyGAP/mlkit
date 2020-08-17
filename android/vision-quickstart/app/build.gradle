@@ -45,24 +45,6 @@ dependencies {
     // Barcode model
     implementation 'com.google.mlkit:barcode-scanning:16.0.2'
 
-    // Object detection feature with bundled default classifier
-    implementation 'com.google.mlkit:object-detection:16.2.0'
-
-    // Object detection feature with custom classifier support
-    implementation 'com.google.mlkit:object-detection-custom:16.2.0'
-
-    // Text features
-    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:16.1.0'
-
-    // Image labeling with automl model support
-    implementation 'com.google.mlkit:image-labeling-automl:16.2.0'
-
-    // Image labeling
-    implementation 'com.google.mlkit:image-labeling:16.2.0'
-
-    // Image labeling custom
-    implementation 'com.google.mlkit:image-labeling-custom:16.2.0'
-
     // -------------------------------------------------------
 
     implementation 'com.google.code.gson:gson:2.8.6'
