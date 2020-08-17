@@ -51,9 +51,6 @@ dependencies {
     // Object detection feature with custom classifier support
     implementation 'com.google.mlkit:object-detection-custom:16.2.0'
 
-    // Face features
-    implementation 'com.google.mlkit:face-detection:16.0.1'
-
     // Text features
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:16.1.0'
 
